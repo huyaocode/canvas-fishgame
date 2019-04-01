@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas</title>
+</head>
+<body>
+  <canvas id="canvas" height="500"></canvas>
+
+  <script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext('2d');
+    
+    ctx.moveTo(100,100 + 10);  //起点
+    //  arcTo(x1,  y1,  x2, y2, radius)
+    
+    ctx.arcTo(100, 200, 200, 200, 10);  // 左下角往右下角
+    ctx.arcTo(200, 200, 200, 100, 10);  // 右下角往右上角
+    ctx.arcTo(200, 100, 100, 100, 10);  // 右上角往左上角
+    ctx.arcTo(100, 100, 100, 200, 10);  // 左上角到左下角
+    ctx.stroke();
+  </script>
+</body>
+</html>
