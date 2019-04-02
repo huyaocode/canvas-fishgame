@@ -181,5 +181,52 @@ ctx.fill(circle);
    - 文本方向。可能的值包括：ltr, rtl, inherit。默认值是 inherit。
 
 预测量文本宽度
-`measureText()`
-将返回一个 TextMetrics对象的宽度、所在像素，这些体现文本特性的属性。
+ - `measureText()`
+   - 将返回一个 TextMetrics对象的宽度、所在像素，这些体现文本特性的属性。
+
+
+### 使用图像 Using images
+引入图像到canvas里需要以下两步基本操作：
+
+1. 获得一个指向HTMLImageElement的对象或者另一个canvas元素的引用作为源，也可以通过提供一个URL的方式来使用图片
+2. 使用`drawImage(image, x, y)`函数将图片绘制到画布上
+
+ - 缩放  `drawImage(image, x, y, width, height)`
+   - 这个方法多了2个参数：width 和 height，这两个参数用来控制 当向canvas画入时应该缩放的大小
+ - 切片  `drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)`
+   - 第一个参数和其它的是相同的，都是一个图像或者另一个 canvas 的引用。其它8个参数最好是参照右边的图解，前4个是定义图像源的切片位置和大小，后4个则是定义切片的目标显示位置和大小。
+
+
+### 状态的保存和恢复 Saving and restoring state
+ - `save()`
+   - 将canvas状态入栈
+ - `restore()`
+   - 将canvas状态出栈
+ 
+一个绘画状态包括：
+
+ - 当前应用的变形（即移动，旋转和缩放，见下）
+ - strokeStyle, fillStyle, globalAlpha, lineWidth, lineCap, lineJoin, miterLimit, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor, globalCompositeOperation 的值
+ - 当前的裁切路径（clipping path）
+
+### 变形 Transformations
+ - 平移原点 `translate(x, y)`
+   - translate 方法接受两个参数。x 是左右偏移量，y 是上下偏移量。
+   - 如果不使用 translate 方法，那么默认位置都是在相同的位置（0,0）
+ - 旋转  `rotate(angle)`
+   - 只接受一个参数：旋转的角度(angle)，它是顺时针方向的，以弧度为单位的值。
+   - 旋转的中心点始终是 canvas 的原点，如果要改变它，我们需要用到 translate 方法
+ - 缩放 `scale(x, y)` 
+   - scale 方法接受两个参数。x,y 分别是横轴和纵轴的缩放因子，它们都必须是正值。值比 1.0 小表示缩小，比 1.0 大则表示放大，值为 1.0 时什么效果都没有。
+ - 变形 `transform(m11, m12, m21, m22, dx, dy)`
+ - m11：水平方向的缩放
+ - m12：水平方向的倾斜偏移
+ - m21：竖直方向的倾斜偏移
+ - m22：竖直方向的缩放
+ - dx：水平方向的移动
+ - dy：竖直方向的移动
+```
+m11 m21 dx
+m12 m22 dy
+0 	0 	1
+```
